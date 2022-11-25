@@ -25,7 +25,7 @@ def uploadFile(fileFullPath):
     try:
         f=open(fileFullPath, 'r')
         files = {'file': f}
-        r = requests.post(env.PARSE_HOSTNAME + env.PARSE_FILES_ENDPOINT + "/" env.PARSE_UPLOADED_FILE_NAME, files=files, headers=headers)
+        r = requests.post(env.PARSE_HOSTNAME + env.PARSE_FILES_ENDPOINT + "/" + env.PARSE_UPLOADED_FILE_NAME, files=files, headers=headers)
         jsonResult = r.json()
         
         if 'error' in jsonResult:
