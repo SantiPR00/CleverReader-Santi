@@ -1,15 +1,22 @@
+import json
+
 from django.http import HttpResponse
-from api import reference
+
+import PyPDF2
+from refextract import extract_references_from_url
+
+from api import table_parser as tp
+from api import image_parser as ip
+
 
 def consume_file(request):
     if request.method == 'POST':
-        print(request.FILES['file'])
-        file = request.FILES['file']
-        extension = request.FILES['file'].name.split(".")
-        extension[1] != "pdf"
-        extension = ["sample", "pdf"]
-        if(extension[1] != "pdf"):
-            return HttpResponse.status_code == 400
-        else:
-            return reference.get_references(file)
-    
+        file = request.FILES['file'].file
+        pdfFileReader = PyPDF2.PdfFileReader(file)
+        numOfPages = pdfFileReader.numPages
+        tp.table_parser(file, numOfPages)
+        ip.image_parser(file, numOfPages)
+        references = extract_references_from_url("http://localhost:8080/api/v1/file/2")
+        return HttpResponse(json.dumps(references))
+
+
