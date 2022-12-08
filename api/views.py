@@ -1,6 +1,7 @@
 import json
 
 from django.http import HttpResponse
+
 import PyPDF2
 from refextract import extract_references_from_url
 
@@ -17,3 +18,5 @@ def consume_file(request):
         ip.image_parser(file, numOfPages)
         references = extract_references_from_url("http://localhost:8080/api/v1/file/2")
         return HttpResponse(json.dumps(references))
+
+
